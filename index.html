@@ -7,19 +7,25 @@
 <style>
   :root {
     color-scheme: light dark;
-    --bg: #ffffff;
-    --fg: #1a1a1a;
-    --muted: #5f5f5f;
-    --line: #e5e5e5;
-    --accent: #2563eb;
+    --bg: #f7f8fb;
+    --card: #ffffff;
+    --fg: #16181d;
+    --muted: #666d78;
+    --line: #e7e9ee;
+    --accent: #6366f1;
+    --accent2: #06b6d4;
+    --shadow: 0 8px 24px rgba(20, 20, 40, 0.08);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #0d1117;
-      --fg: #e6edf3;
-      --muted: #9aa4af;
-      --line: #232a32;
-      --accent: #58a6ff;
+      --bg: #0b0d12;
+      --card: #151821;
+      --fg: #eef1f6;
+      --muted: #9aa4b2;
+      --line: #262b36;
+      --accent: #818cf8;
+      --accent2: #22d3ee;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     }
   }
   * { box-sizing: border-box; }
@@ -31,60 +37,128 @@
     line-height: 1.7;
   }
   main {
-    max-width: 640px;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 4rem 1.5rem 5rem;
+    padding: 0 1.5rem 5rem;
   }
-  h1 {
-    font-size: 1.5rem;
-    margin: 0 0 0.4rem;
+
+  .hero {
+    margin: 0 -1.5rem 2.5rem;
+    padding: 4rem 1.5rem 3.5rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    text-align: center;
+    border-radius: 0 0 28px 28px;
   }
-  .intro {
-    color: var(--muted);
-    margin: 0 0 2.5rem;
+  .avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.85);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 {
+    margin: 0 0 0.6rem;
+    font-size: 1.7rem;
+  }
+  .typewrap {
     font-size: 1.05rem;
+    min-height: 1.6em;
+    opacity: 0.95;
   }
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    background: #fff;
+    margin-left: 2px;
+    animation: blink 0.9s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .badges {
+    margin-top: 1.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  .badges img { display: block; }
+
   section {
-    margin-bottom: 2.2rem;
+    margin-bottom: 1.6rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 1.4rem 1.6rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.15s ease;
   }
+  section:hover { transform: translateY(-2px); }
+
   h2 {
     font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--muted);
-    margin: 0 0 0.8rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--line);
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    margin: 0 0 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
   ul {
     margin: 0;
     padding-left: 1.2rem;
   }
-  li {
-    margin-bottom: 0.4rem;
-  }
+  li { margin-bottom: 0.5rem; }
   p { margin: 0; }
-  a {
-    color: var(--accent);
-    text-decoration: none;
-  }
+  a { color: var(--accent); text-decoration: none; font-weight: 600; }
   a:hover { text-decoration: underline; }
+
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .stats img {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+  }
+
   footer {
-    margin-top: 3rem;
+    margin-top: 2.5rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--line);
     color: var(--muted);
     font-size: 0.9rem;
+    text-align: center;
   }
 </style>
 </head>
 <body>
 <main>
-  <h1>안녕하세요, 최희운입니다 👋</h1>
-  <p class="intro">네트워크 엔지니어를 꿈꾸는 학생입니다. 항상 행복하고싶어요.</p>
+  <div class="hero">
+    <img class="avatar" src="https://github.com/choiheewoon.png" alt="choiheewoon">
+    <h1>안녕하세요, 최희운입니다 👋</h1>
+    <div class="typewrap"><span id="typed"></span><span class="cursor">&nbsp;</span></div>
+
+    <div class="badges">
+      <img src="https://img.shields.io/badge/CCNA-학습%20중-6366f1?style=for-the-badge&logo=cisco&logoColor=white" alt="CCNA 학습중">
+      <img src="https://img.shields.io/badge/Next.js-보조%20학습-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js">
+      <a href="mailto:huiunchoe550@gmail.com"><img src="https://img.shields.io/badge/Email-huiunchoe550-06b6d4?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"></a>
+      <a href="https://github.com/choiheewoon"><img src="https://img.shields.io/badge/GitHub-choiheewoon-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
+    </div>
+  </div>
+
+  <div class="stats" id="stats">
+    <img src="https://github-readme-stats.vercel.app/api?username=choiheewoon&show_icons=true&theme=tokyonight&hide_border=true&rank_icon=percentile" alt="GitHub stats" width="340" onerror="this.style.display='none'">
+    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=choiheewoon&layout=compact&theme=tokyonight&hide_border=true" alt="Top languages" width="340" onerror="this.style.display='none'">
+  </div>
 
   <section>
-    <h2>지금 하고 있는 일</h2>
+    <h2>🧭 지금 하고 있는 일</h2>
     <ul>
       <li>CCNA 자격증 취득 준비 중</li>
       <li>학교 수업/실습으로 네트워크 기초를 다지는 중</li>
@@ -93,12 +167,12 @@
   </section>
 
   <section>
-    <h2>관심 분야</h2>
+    <h2>🌱 관심 분야</h2>
     <p>전공 여러 분야를 배워보던 중 네트워크가 가장 흥미로워서, 그 이후로 네트워크 엔지니어링에 관심을 갖고 있습니다.</p>
   </section>
 
   <section>
-    <h2>만들고 있는 것</h2>
+    <h2>📌 만들고 있는 것</h2>
     <ul>
       <li><a href="https://github.com/choiheewoon/board">board</a> — Next.js로 만든 게시글·댓글 기능이 있는 웹 게시판. 코딩 연습용 사이드 프로젝트입니다.</li>
     </ul>
@@ -109,5 +183,46 @@
     <a href="https://github.com/choiheewoon">GitHub</a>
   </footer>
 </main>
+
+<script>
+  const phrases = [
+    "네트워크 엔지니어를 꿈꾸는 학생입니다.",
+    "항상 행복하고싶어요.",
+    "CCNA 취득을 준비하고 있어요.",
+    "코딩도 조금씩 연습 중이에요."
+  ];
+  const el = document.getElementById('typed');
+  let p = 0, i = 0, deleting = false;
+
+  function tick() {
+    const current = phrases[p];
+    if (!deleting) {
+      i++;
+      el.textContent = current.slice(0, i);
+      if (i === current.length) {
+        deleting = true;
+        setTimeout(tick, 1600);
+        return;
+      }
+    } else {
+      i--;
+      el.textContent = current.slice(0, i);
+      if (i === 0) {
+        deleting = false;
+        p = (p + 1) % phrases.length;
+      }
+    }
+    setTimeout(tick, deleting ? 35 : 70);
+  }
+  tick();
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const stats = document.getElementById('stats');
+      const visible = [...stats.querySelectorAll('img')].some(img => img.style.display !== 'none');
+      if (!visible) stats.style.display = 'none';
+    }, 4000);
+  });
+</script>
 </body>
 </html>
