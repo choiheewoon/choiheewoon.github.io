@@ -4,136 +4,268 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>최희운</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css">
 <style>
   :root {
     color-scheme: light dark;
-    --bg: #f7f8fb;
-    --card: #ffffff;
-    --fg: #16181d;
-    --muted: #666d78;
-    --line: #e7e9ee;
-    --accent: #6366f1;
-    --accent2: #06b6d4;
-    --shadow: 0 8px 24px rgba(20, 20, 40, 0.08);
+
+    /* neutrals (cool-blue tinted) */
+    --bg: oklch(1 0 0);
+    --bg-panel: oklch(0.978 0.003 247);
+    --surface: oklch(1 0 0);
+    --ink: oklch(0.234 0.030 254);
+    --ink-secondary: oklch(0.452 0.028 253);
+    --ink-tertiary: oklch(0.652 0.020 252);
+    --line: oklch(0.913 0.008 247);
+
+    /* single accent */
+    --accent: oklch(0.624 0.176 254);
+    --accent-press: oklch(0.522 0.176 257);
+    --accent-weak: oklch(0.965 0.020 250);
+    --on-accent: oklch(1 0 0);
+
+    --radius-chip: 999px;
+    --radius-badge: 6px;
+    --radius-m: 12px;
+    --radius-l: 14px;
+    --radius-xl: 16px;
+    --radius-2xl: 20px;
+    --radius-3xl: 24px;
+    --radius-4xl: 32px;
+
+    --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --dur-fast: 120ms;
+    --dur-base: 200ms;
   }
   @media (prefers-color-scheme: dark) {
+    /* Toss's handoff bundle only ships light-mode canonical values (documented gap) —
+       this dark variant keeps the same relationships/hue and is our own extension. */
     :root {
-      --bg: #0b0d12;
-      --card: #151821;
-      --fg: #eef1f6;
-      --muted: #9aa4b2;
-      --line: #262b36;
-      --accent: #818cf8;
-      --accent2: #22d3ee;
-      --shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --bg: oklch(0.205 0.025 254);
+      --bg-panel: oklch(0.175 0.022 254);
+      --surface: oklch(0.240 0.026 254);
+      --ink: oklch(0.945 0.006 247);
+      --ink-secondary: oklch(0.760 0.014 250);
+      --ink-tertiary: oklch(0.560 0.018 251);
+      --line: oklch(0.330 0.026 254);
+      --accent: oklch(0.700 0.160 254);
+      --accent-press: oklch(0.760 0.140 254);
+      --accent-weak: oklch(0.300 0.060 254);
+      --on-accent: oklch(0.140 0.020 254);
     }
   }
+
   * { box-sizing: border-box; }
   body {
     margin: 0;
     background: var(--bg);
-    color: var(--fg);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-    line-height: 1.7;
+    color: var(--ink);
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+      "SF Pro Text", "SF Pro", "Apple SD Gothic Neo", "Noto Sans KR", Roboto,
+      "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
   main {
-    max-width: 720px;
+    max-width: 640px;
     margin: 0 auto;
-    padding: 0 1.5rem 5rem;
+    padding: 0 0 5rem;
   }
 
+  /* hero — flat panel, no gradient (Toss chrome forbids gradients outside 3 exceptions) */
   .hero {
-    margin: 0 -1.5rem 2.5rem;
-    padding: 4rem 1.5rem 3.5rem;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: #fff;
+    background: var(--bg-panel);
+    border-radius: 0 0 var(--radius-4xl) var(--radius-4xl);
+    padding: 4rem 1.5rem 2.5rem;
     text-align: center;
-    border-radius: 0 0 28px 28px;
   }
   .avatar {
-    width: 96px;
-    height: 96px;
+    width: 88px;
+    height: 88px;
     border-radius: 50%;
-    border: 3px solid rgba(255,255,255,0.85);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-    margin-bottom: 1.2rem;
+    border: 1px solid var(--line);
+    margin-bottom: 1.25rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
   .hero h1 {
-    margin: 0 0 0.6rem;
-    font-size: 1.7rem;
+    margin: 0 0 0.5rem;
+    font-size: 28px;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    color: var(--ink);
   }
   .typewrap {
-    font-size: 1.05rem;
+    font-size: 17px;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--ink-secondary);
     min-height: 1.6em;
-    opacity: 0.95;
   }
   .cursor {
     display: inline-block;
     width: 2px;
-    background: #fff;
+    background: var(--ink-tertiary);
     margin-left: 2px;
     animation: blink 0.9s steps(1) infinite;
   }
   @keyframes blink { 50% { opacity: 0; } }
 
-  .badges {
+  /* chips — Toss chip component: 34px full pill, one brand-colored, rest neutral */
+  .chips {
     margin-top: 1.4rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 8px;
     justify-content: center;
   }
-  .badges img { display: block; }
+  .chip {
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 16px;
+    border-radius: var(--radius-chip);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    text-decoration: none;
+    transition: background var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease);
+  }
+  .chip.brand {
+    border-color: transparent;
+    background: var(--accent-weak);
+    color: var(--accent);
+  }
+  a.chip:hover { border-color: var(--ink-tertiary); }
+
+  main > .section-stack {
+    padding: 1.75rem 1.5rem 0;
+  }
 
   section {
-    margin-bottom: 1.6rem;
-    background: var(--card);
+    margin-bottom: 1rem;
+    background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 1.4rem 1.6rem;
-    box-shadow: var(--shadow);
-    transition: transform 0.15s ease;
+    border-radius: var(--radius-2xl);
+    padding: 1.5rem;
   }
-  section:hover { transform: translateY(-2px); }
 
   h2 {
-    font-size: 0.95rem;
-    letter-spacing: 0.02em;
-    color: var(--accent);
+    font-size: 18px;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+    color: var(--ink);
     margin: 0 0 0.9rem;
+  }
+  ul { margin: 0; padding-left: 1.1rem; }
+  li {
+    margin-bottom: 0.5rem;
+    font-size: 15px;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--ink-secondary);
+  }
+  li:last-child { margin-bottom: 0; }
+  p.body {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--ink-secondary);
+  }
+
+  /* list-row — Toss pattern: leading icon block + title/subtitle + trailing chevron */
+  .list-row {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 14px;
+    text-decoration: none;
+    color: inherit;
+    padding: 2px 0;
   }
-  ul {
-    margin: 0;
-    padding-left: 1.2rem;
+  .list-row .icon {
+    width: 44px;
+    height: 44px;
+    flex: none;
+    border-radius: var(--radius-m);
+    background: var(--accent-weak);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    font-weight: 700;
   }
-  li { margin-bottom: 0.5rem; }
-  p { margin: 0; }
-  a { color: var(--accent); text-decoration: none; font-weight: 600; }
-  a:hover { text-decoration: underline; }
+  .list-row .text { flex: 1; min-width: 0; }
+  .list-row .title {
+    display: block;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .list-row .subtitle {
+    display: block;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ink-tertiary);
+  }
+  .list-row .chevron {
+    flex: none;
+    color: var(--ink-tertiary);
+  }
 
   .stats {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.8rem;
+    gap: 12px;
     justify-content: center;
-    margin-bottom: 2rem;
+    margin: 1.5rem 0;
+    padding: 0 1.5rem;
   }
   .stats img {
     max-width: 100%;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
+    border-radius: var(--radius-xl);
   }
 
-  footer {
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--line);
-    color: var(--muted);
-    font-size: 0.9rem;
-    text-align: center;
+  /* primary CTA — single accent, XL button spec (56px / radius-xl / label-l) */
+  .cta-wrap {
+    padding: 0.5rem 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .btn-primary {
+    height: 56px;
+    border-radius: var(--radius-xl);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background var(--dur-fast) var(--ease);
+  }
+  .btn-primary:active { background: var(--accent-press); }
+
+  .btn-ghost {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
   }
 </style>
 </head>
@@ -144,44 +276,53 @@
     <h1>안녕하세요, 최희운입니다 👋</h1>
     <div class="typewrap"><span id="typed"></span><span class="cursor">&nbsp;</span></div>
 
-    <div class="badges">
-      <img src="https://img.shields.io/badge/CCNA-학습%20중-6366f1?style=for-the-badge&logo=cisco&logoColor=white" alt="CCNA 학습중">
-      <img src="https://img.shields.io/badge/Next.js-보조%20학습-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js">
-      <a href="mailto:huiunchoe550@gmail.com"><img src="https://img.shields.io/badge/Email-huiunchoe550-06b6d4?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"></a>
-      <a href="https://github.com/choiheewoon"><img src="https://img.shields.io/badge/GitHub-choiheewoon-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
+    <div class="chips">
+      <span class="chip brand">CCNA 학습 중</span>
+      <span class="chip">Next.js</span>
+      <a class="chip" href="mailto:huiunchoe550@gmail.com">Email</a>
+      <a class="chip" href="https://github.com/choiheewoon">GitHub</a>
     </div>
   </div>
 
-  <div class="stats" id="stats">
-    <img src="https://github-readme-stats.vercel.app/api?username=choiheewoon&show_icons=true&theme=tokyonight&hide_border=true&rank_icon=percentile" alt="GitHub stats" width="340" onerror="this.style.display='none'">
-    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=choiheewoon&layout=compact&theme=tokyonight&hide_border=true" alt="Top languages" width="340" onerror="this.style.display='none'">
+  <div class="stats">
+    <img src="https://github-readme-stats.vercel.app/api?username=choiheewoon&show_icons=true&hide_border=false&bg_color=ffffff&title_color=191F28&text_color=4E5968&icon_color=3182F6&border_color=E5E8EB"
+         alt="GitHub stats" width="300" onerror="this.style.display='none'">
+    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=choiheewoon&layout=compact&hide_border=false&bg_color=ffffff&title_color=191F28&text_color=4E5968&border_color=E5E8EB"
+         alt="Top languages" width="300" onerror="this.style.display='none'">
   </div>
 
-  <section>
-    <h2>🧭 지금 하고 있는 일</h2>
-    <ul>
-      <li>CCNA 자격증 취득 준비 중</li>
-      <li>학교 수업/실습으로 네트워크 기초를 다지는 중</li>
-      <li>사이드 프로젝트로 웹 개발(Next.js)도 함께 연습 중 — 네트워크 학습을 보조하는 도구로 활용</li>
-    </ul>
-  </section>
+  <div class="section-stack">
+    <section>
+      <h2>지금 하고 있는 일</h2>
+      <ul>
+        <li>CCNA 자격증 취득 준비 중</li>
+        <li>학교 수업/실습으로 네트워크 기초를 다지는 중</li>
+        <li>사이드 프로젝트로 웹 개발(Next.js)도 함께 연습 중 — 네트워크 학습을 보조하는 도구로 활용</li>
+      </ul>
+    </section>
 
-  <section>
-    <h2>🌱 관심 분야</h2>
-    <p>전공 여러 분야를 배워보던 중 네트워크가 가장 흥미로워서, 그 이후로 네트워크 엔지니어링에 관심을 갖고 있습니다.</p>
-  </section>
+    <section>
+      <h2>관심 분야</h2>
+      <p class="body">전공 여러 분야를 배워보던 중 네트워크가 가장 흥미로워서, 그 이후로 네트워크 엔지니어링에 관심을 갖고 있습니다.</p>
+    </section>
 
-  <section>
-    <h2>📌 만들고 있는 것</h2>
-    <ul>
-      <li><a href="https://github.com/choiheewoon/board">board</a> — Next.js로 만든 게시글·댓글 기능이 있는 웹 게시판. 코딩 연습용 사이드 프로젝트입니다.</li>
-    </ul>
-  </section>
+    <section>
+      <h2>만들고 있는 것</h2>
+      <a class="list-row" href="https://github.com/choiheewoon/board">
+        <span class="icon">B</span>
+        <span class="text">
+          <span class="title">board</span>
+          <span class="subtitle">Next.js로 만든 게시글·댓글 기능이 있는 웹 게시판. 코딩 연습용 사이드 프로젝트입니다.</span>
+        </span>
+        <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </section>
+  </div>
 
-  <footer>
-    <a href="mailto:huiunchoe550@gmail.com">huiunchoe550@gmail.com</a> ·
-    <a href="https://github.com/choiheewoon">GitHub</a>
-  </footer>
+  <div class="cta-wrap">
+    <a class="btn-primary" href="mailto:huiunchoe550@gmail.com">이메일 보내기</a>
+    <a class="btn-ghost" href="https://github.com/choiheewoon">GitHub 프로필 보기</a>
+  </div>
 </main>
 
 <script>
@@ -218,7 +359,7 @@
 
   window.addEventListener('load', () => {
     setTimeout(() => {
-      const stats = document.getElementById('stats');
+      const stats = document.querySelector('.stats');
       const visible = [...stats.querySelectorAll('img')].some(img => img.style.display !== 'none');
       if (!visible) stats.style.display = 'none';
     }, 4000);
