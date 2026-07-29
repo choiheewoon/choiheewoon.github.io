@@ -78,15 +78,39 @@
     padding: 4rem 1.5rem 2.5rem;
     text-align: center;
   }
+  .avatar-wrap {
+    position: relative;
+    width: 88px;
+    margin: 0 auto 1.25rem;
+  }
+  .avatar-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -14px;
+    border-radius: 50%;
+    background: var(--accent-weak);
+  }
   .avatar {
+    position: relative;
     width: 88px;
     height: 88px;
     border-radius: 50%;
-    border: 1px solid var(--line);
-    margin-bottom: 1.25rem;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    box-shadow: 0 0 0 4px var(--bg-panel);
+  }
+  .avatar-badge {
+    position: absolute;
+    right: -2px;
+    bottom: -2px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--bg-panel);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--on-accent);
   }
   .hero h1 {
     margin: 0 0 0.5rem;
@@ -272,7 +296,17 @@
 <body>
 <main>
   <div class="hero">
-    <img class="avatar" src="https://github.com/choiheewoon.png" alt="choiheewoon">
+    <div class="avatar-wrap">
+      <img class="avatar" src="https://github.com/choiheewoon.png" alt="choiheewoon">
+      <span class="avatar-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 13a10 10 0 0 1 14 0"/>
+          <path d="M8.5 16.5a5 5 0 0 1 7 0"/>
+          <path d="M2 8.5a15 15 0 0 1 20 0"/>
+          <line x1="12" y1="20" x2="12.01" y2="20"/>
+        </svg>
+      </span>
+    </div>
     <h1>안녕하세요, 최희운입니다 👋</h1>
     <div class="typewrap"><span id="typed"></span><span class="cursor">&nbsp;</span></div>
 
