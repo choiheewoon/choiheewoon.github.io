@@ -73,44 +73,45 @@
 
   /* hero — flat panel, no gradient (Toss chrome forbids gradients outside 3 exceptions) */
   .hero {
+    position: relative;
     background: var(--bg-panel);
+    border: 1px solid var(--line);
     border-radius: 0 0 var(--radius-4xl) var(--radius-4xl);
     padding: 4rem 1.5rem 2.5rem;
     text-align: center;
+    overflow: hidden;
   }
-  .avatar-wrap {
-    position: relative;
-    width: 88px;
-    margin: 0 auto 1.25rem;
-  }
-  .avatar-wrap::before {
+  .hero::before {
+    /* decorative flourish, not a Toss-documented asset — our own extension, low-opacity single-hue */
     content: '';
     position: absolute;
-    inset: -14px;
+    top: -40px;
+    right: -40px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     background: var(--accent-weak);
+    opacity: 0.7;
   }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    left: -30px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 16px solid var(--accent-weak);
+    opacity: 0.6;
+  }
+  .hero > * { position: relative; z-index: 1; }
   .avatar {
-    position: relative;
     width: 88px;
     height: 88px;
     border-radius: 50%;
+    border: 1px solid var(--line);
+    margin: 0 auto 1.25rem;
     display: block;
-    box-shadow: 0 0 0 4px var(--bg-panel);
-  }
-  .avatar-badge {
-    position: absolute;
-    right: -2px;
-    bottom: -2px;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--accent);
-    border: 3px solid var(--bg-panel);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--on-accent);
   }
   .hero h1 {
     margin: 0 0 0.5rem;
@@ -296,23 +297,13 @@
 <body>
 <main>
   <div class="hero">
-    <div class="avatar-wrap">
-      <img class="avatar" src="https://github.com/choiheewoon.png" alt="choiheewoon">
-      <span class="avatar-badge">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 13a10 10 0 0 1 14 0"/>
-          <path d="M8.5 16.5a5 5 0 0 1 7 0"/>
-          <path d="M2 8.5a15 15 0 0 1 20 0"/>
-          <line x1="12" y1="20" x2="12.01" y2="20"/>
-        </svg>
-      </span>
-    </div>
+    <img class="avatar" src="https://github.com/choiheewoon.png" alt="choiheewoon">
     <h1>안녕하세요, 최희운입니다 👋</h1>
     <div class="typewrap"><span id="typed"></span><span class="cursor">&nbsp;</span></div>
 
     <div class="chips">
       <span class="chip brand">CCNA 학습 중</span>
-      <span class="chip">Next.js</span>
+      <span class="chip">이테크시스템</span>
       <a class="chip" href="mailto:huiunchoe550@gmail.com">Email</a>
       <a class="chip" href="https://github.com/choiheewoon">GitHub</a>
     </div>
